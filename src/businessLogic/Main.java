@@ -10,6 +10,7 @@ private static Main instance = null;
 	public void startSimulation(int agents,float bandwidth,float sizeFile){
 		window.StartSimulation(agents, bandwidth, sizeFile);
 	}
+	
 	public static Main getInstance(){
 		if(instance==null){
 			synchronized (Main.class) {

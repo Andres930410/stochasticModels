@@ -1,8 +1,14 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Iterator;
 
 import javax.swing.JFrame;
+import javax.swing.Timer;
+
+import data.Agent;
 
 public class Window extends JFrame{
 	private Container container;
@@ -23,6 +29,8 @@ public class Window extends JFrame{
 	}
 	public void StartSimulation(int agents,float bandwidth,float sizeFile){
 		container.startSimulation(agents, bandwidth, sizeFile);
+		
 	}
+	
 
 }

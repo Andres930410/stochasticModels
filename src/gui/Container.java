@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
 
 public class Container extends JPanel {
 	private Right right;
@@ -20,7 +21,7 @@ public class Container extends JPanel {
 		rightConstraints.weightx = 0.7;
 		rightConstraints.gridx = 1;
 		rightConstraints.gridy = 0;
-		rightConstraints.ipady = 600; 
+		rightConstraints.ipady = 550; 
 		//rightConstraints.fill = GridBagConstraints.VERTICAL;
 		left =  new Left();
 		JScrollPane scroll =  new JScrollPane(left);
@@ -29,7 +30,7 @@ public class Container extends JPanel {
 		leftConstrains.weightx = 0.3;
 		leftConstrains.gridx = 0;
 		leftConstrains.gridy = 0;
-		leftConstrains.ipady = 600; 
+		leftConstrains.ipady = 550; 
 		add(scroll,leftConstrains);
 		add(right,rightConstraints);
 		
@@ -38,4 +39,5 @@ public class Container extends JPanel {
 		right.startSimulation(agents, bandwidth, sizeFile);
 		repaint();
 	}
+	
 }
