@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -36,9 +37,12 @@ public class Left extends JPanel {
 	private JPanel panelSizeFile;
 	
 	private JButton startSimulation;
-	
+	private JButton statistics;
+	private JComboBox statisticsType;	
+	String type;
 	public Left(){
 		super();
+		type = "conecciones";
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		init();
 		
@@ -96,6 +100,8 @@ public class Left extends JPanel {
 					int agents =  Integer.parseInt(numThreads.getText());
 					float bandwidthValue = Float.parseFloat(bandwidth.getText());
 					float sizeFileValue =  Float.parseFloat(sizeFile.getText());
+					statistics.setVisible(false);
+					statisticsType.setVisible(false);
 					Main.getInstance().startSimulation(agents, bandwidthValue, sizeFileValue);
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(null, "Datos no validos");
@@ -104,6 +110,37 @@ public class Left extends JPanel {
 		});
 		
 		add(startSimulation);
+		
+		statistics =  new JButton("Estadisticas");
+		statistics.setVisible(false);
+		statistics.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Main.getInstance().showStatistics(type);
+				
+			}
+		});
+		add(statistics);
+		String items [] = {"conecciones","agentes prendidos","informacion"};
+		statisticsType = new JComboBox(items);
+		statisticsType.setSize(150, 30);
+		statisticsType.setVisible(false);
+		statisticsType.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				 JComboBox cb = (JComboBox)e.getSource();
+			     type = (String)cb.getSelectedItem();
+				
+			}
+		});
+		add(statisticsType);
+		
+	}
+	public void finish() {
+		statistics.setVisible(true);
+		statisticsType.setVisible(true);
 	}
 }
 

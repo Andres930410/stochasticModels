@@ -39,5 +39,8 @@ public class Container extends JPanel {
 		right.startSimulation(agents, bandwidth, sizeFile);
 		repaint();
 	}
+	public void finish() {
+		left.finish();
+	}
 	
 }

@@ -25,7 +25,8 @@ public class Menu extends JMenuBar{
 				JOptionPane.showMessageDialog(null, "Jeferson Cano\n"
 						+ "Fabian Conejo\n"
 						+ "Andres Gutierrez\n"
-						+ "Fernando Muñoz");
+						+ "Fernando Muñoz\n"
+						+ "Cesar Silva");
 				
 			}
 		});

@@ -31,6 +31,10 @@ public class Window extends JFrame{
 		container.startSimulation(agents, bandwidth, sizeFile);
 		
 	}
+	public void finish() {
+		container.finish();
+		
+	}
 	
 
 }
