@@ -62,7 +62,7 @@ public class Main {
 	public void showStatistics(String type) {
 		FrameFactory f = new FrameFactory();
 		statisticsGUI = f.getStatistics(type);
-		statisticsGUI.pack( );        
+		statisticsGUI.pack();        
 	    RefineryUtilities.centerFrameOnScreen( statisticsGUI );        
 	    statisticsGUI.setVisible( true ); 
 		

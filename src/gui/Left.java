@@ -122,7 +122,7 @@ public class Left extends JPanel {
 			}
 		});
 		add(statistics);
-		String items [] = {"conecciones","agentes prendidos","informacion"};
+		String items [] = {"conexion","agentes prendidos","informacion"};
 		statisticsType = new JComboBox(items);
 		statisticsType.setSize(150, 30);
 		statisticsType.setVisible(false);

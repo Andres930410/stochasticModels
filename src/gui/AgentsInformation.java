@@ -46,7 +46,6 @@ public class AgentsInformation extends ApplicationFrame {
 			      new DefaultCategoryDataset( );  
 		
 		for(String key:keys){
-			System.out.println(keys);
 			Data a = s.getAgentsInformation().get(key);
 			dataset.addValue( a.getSecondsToFinish() , a.getName() , seconds );   
 			dataset.addValue( a.getSecondsOff() , a.getName() , inactivity );
