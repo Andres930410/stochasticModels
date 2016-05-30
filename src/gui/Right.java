@@ -95,6 +95,7 @@ public class Right extends JPanel {
         				data);
             	Main.getInstance().getStatistics().addInformationAboutNumOfConnections(a.getName(), a.numOfConnections());
         	}
+        	
         	timer.stop();
         	Main.getInstance().finish();
         }

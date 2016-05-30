@@ -10,17 +10,26 @@ public class AgentChoice implements Comparable<AgentChoice>{
 	private float sizeFileDifference;
 	private float bandwidth;
 	
-	private static final double WDISTANCE = 0.5;
-	private static final double WCONNECTION = 25;
-	private static final double WRADIO = 1;
-	private static final double WSIZEFILE = 10;
-	private static final double WBANDWIDTH = 4;
 	
-	public AgentChoice(Agent me, Agent a) {
+	//This  five variables will sum 50
+	private  double WDISTANCE;
+	private  double WCONNECTION;
+	private  double WRADIO;
+	private  double WSIZEFILE;
+	private  double WBANDWIDTH;
+	
+	public AgentChoice(Agent me, Agent a, 
+			double WDISTANCE,double WCONNECTION,double WRADIO,
+			double WSIZEFILE,double WBANDWIDTH) {
+		this.WDISTANCE = WDISTANCE;
+		this.WCONNECTION = WCONNECTION;
+		this.WRADIO = WRADIO;
+		this.WSIZEFILE = WSIZEFILE;
+		this.WBANDWIDTH = WBANDWIDTH;
 		x = a.getX();
 		y = a.getY();
 		sizeFile = a.getSizeFileTemp();
-		bandwidth = a.getTransferVelocity();
+		bandwidth = a.getBandwidth();
 		sizeFileDifference = me.getSizeFileTemp()- me.getSizeFile();
 		numOfConnections = a.getActiveConnections();
 		distance = Math.hypot(me.getX()-x,me.getY() - y);
@@ -87,10 +96,11 @@ public class AgentChoice implements Comparable<AgentChoice>{
 	}
 
 	private double getWeight(){
-		return (radio * WRADIO) + (distance * WDISTANCE) + numOfConnections * WCONNECTION - bandwidth * WBANDWIDTH;
+		return (radio * WRADIO) + (distance * WDISTANCE) + numOfConnections * WCONNECTION - bandwidth * WBANDWIDTH 
+				-sizeFile * WSIZEFILE;
 	}
 	private double getAnotherWeight(){
-		return  sizeFile *WSIZEFILE + numOfConnections *WCONNECTION;
+		return  sizeFile * WSIZEFILE + numOfConnections * WCONNECTION - distance * WDISTANCE + (radio * WRADIO);
 	}
 	
 	
