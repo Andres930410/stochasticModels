@@ -42,7 +42,7 @@ public class Left extends JPanel {
 	String type;
 	public Left(){
 		super();
-		type = "conecciones";
+		type = "conexion";
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		init();
 		

@@ -12,6 +12,7 @@ import java.util.Random;
 import javax.swing.SwingUtilities;
 
 import businessLogic.Main;
+import gui.Right;
 
 public class Agent  {
 	// TODO
@@ -40,13 +41,22 @@ public class Agent  {
 	private double wbandwidth = 10;
 	private double wconnection = 10;
 	private double wsizefile = 10;
+	private String idCommunity;
+	private boolean communicationWithOtherCommunities;
+	private int jealous;
 	
 	private static final int STEP = 5;
 	
 	
 	public Agent(int x, int y, double range,Color color,String name,
-			float sizeFile,float initialSizeFile,float transferVelocity) {
+			float sizeFile,float initialSizeFile,float transferVelocity,
+			String idCommunity) {
 		super();
+		//If the value is <=4 the agent will be jealous in the other hand the agent 
+		//can communicate with other communities
+		
+		communicationWithOtherCommunities = false;
+		this.idCommunity = idCommunity; 
 		seconds = 0;
 		mainObjective = false;
 		connectionSizeFile = 0;
@@ -59,6 +69,7 @@ public class Agent  {
 		this.intialSizeFile = initialSizeFile;
 		this.name =  name;
 		rand = new Random();
+		jealous =  rand.nextInt(10);
 		this.x = x;
 		this.color = color;
 		this.y = y;
@@ -90,7 +101,7 @@ public class Agent  {
 	public String getName(){
 		return name;
 	}
-	public String getProcent(){
+	public String getPercent(){
 		return ""+sizeFileTemp/sizeFile *100+"%";
 	}
 	public float getTransferVelocity(){
@@ -106,23 +117,34 @@ public class Agent  {
 			
 			List<AgentChoice> choices = new ArrayList<>();
 			
-			generateWieghts(agents);
-			System.out.println("radio-bandwidth-connection-distance-wsizefile");
-			System.out.println(wradio+" "+ wbandwidth +" "+ wconnection+ " "+
-			wdistance+ " " +wsizefile);
+			generateWeights(agents);
 			for(Agent agent: agents){
 				if(agent.isOn() && sizeFileTemp < agent.getSizeFileTemp() && !name.equals(agent.name)){
-					choices.add(new AgentChoice(this, agent,wdistance,wconnection,
+					if(communicationWithOtherCommunities && isCircleInside(agent, Right.communities)){
+						choices.add(new AgentChoice(this, agent,wdistance,wconnection,
 							wradio,wsizefile,wbandwidth));
-				}else if(agent.isOn() && sizeFileTemp==sizeFile && !name.equals(agent.getName())){//This node has the 100% of the file
-					if(agent.sizeFileTemp != sizeFile){
+					}else if(agent.getIdCommunity().equals(idCommunity) && isCircleInside(agent, Right.communities)){
 						choices.add(new AgentChoice(this, agent,wdistance,wconnection,
 								wradio,wsizefile,wbandwidth));
+					}
+				}else if(agent.isOn() && sizeFileTemp==sizeFile && !name.equals(agent.getName())){//This node has the 100% of the file
+					if(agent.sizeFileTemp != sizeFile){
+						if(communicationWithOtherCommunities && isCircleInside(agent, Right.communities)){
+							choices.add(new AgentChoice(this, agent,wdistance,wconnection,
+									wradio,wsizefile,wbandwidth));
+						}else if(agent.getIdCommunity().equals(idCommunity) && isCircleInside(agent, Right.communities)){
+							choices.add(new AgentChoice(this, agent,wdistance,wconnection,
+									wradio,wsizefile,wbandwidth));
+						}
+						
 					}
 				}
 			}
 			if(choices.isEmpty()) return;
-			Collections.sort(choices);
+			try{
+				Collections.sort(choices);
+			}catch(Exception e){}
+			
 			
 			//Move to the best choice
 			AgentChoice best = choices.get(0);
@@ -135,6 +157,12 @@ public class Agent  {
 				x += dx;
 				y += dy;
 			}
+			
+			int value =  (int)(rand.nextGaussian() * 10);
+			if(value == -3 || value == 3){
+				communicationWithOtherCommunities = true;
+			}
+			
 			
 			if(x<0){
 				x=490;
@@ -236,7 +264,7 @@ public class Agent  {
 	public double distance(int x,int y,int x1,int y1){
 		return Math.sqrt(Math.pow(x-x1, 2)+Math.pow(y-y1, 2));
 	}
-	public void generateWieghts(List<Agent> agents){
+	public void generateWeights(List<Agent> agents){
 		int distance = 30 + rand.nextInt(20);
 		int radio = 30 + rand.nextInt(30);
 		int countDistance = 0;
@@ -286,4 +314,28 @@ public class Agent  {
 			wbandwidth = 50.0 - (wdistance + wradio +wconnection +wsizefile);
 		}
 	}
+	public String getIdCommunity() {
+		return idCommunity;
+	}
+	public void setIdCommunity(String idCommunity) {
+		this.idCommunity = idCommunity;
+	}
+	public boolean isCommunicationWithOhterCommunities() {
+		return communicationWithOtherCommunities;
+	}
+	public void setCommunicationWithOhterCommunities(boolean communicationWithOhterCommunities) {
+		this.communicationWithOtherCommunities = communicationWithOhterCommunities;
+	}
+	public boolean isCircleInside(Agent a, List<Community> c){
+		for(Community c1:c){
+			double  dist = Math.hypot((a.getX()-c1.getX()), (a.getY()-c1.getY()));
+			//double  dist1 = Math.hypot((b.getX()-c1.getX()), (b.getY()-c1.getY()));
+			if(dist <=c1.getRadio()/2){
+				return true;
+			}
+		}
+		return false;
+		
+	}
+	
 }

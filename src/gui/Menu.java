@@ -36,7 +36,8 @@ public class Menu extends JMenuBar{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "Alguna descripcion");
+				JOptionPane.showMessageDialog(null, "Simulador de una red adhoc que comparte archivos,\n"
+						+ "con el mismo principio de BitTorrent");
 				
 			}
 		});

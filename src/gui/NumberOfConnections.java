@@ -18,12 +18,12 @@ import data.Statistics;
 
 public class NumberOfConnections extends ApplicationFrame{
 	public NumberOfConnections(){
-		super("Numero de conecciones por agente");
+		super("Numero de conexiones por agente");
 		setContentPane(createPanel());
 	}
 	public JFreeChart createChart(PieDataset dataset){
 		JFreeChart chart = ChartFactory.createPieChart(
-				"Numero de conecciones", 
+				"Numero de conexiones", 
 				dataset, 
 				true, 
 				true, 

@@ -38,7 +38,7 @@ public class AgentsInformation extends ApplicationFrame {
 		Statistics s  = Main.getInstance().getStatistics();
 		String seconds = "Segundos para finalizar";
 		String inactivity ="Segundos inactivos";
-		String numConnectios ="Numero de connecciones";
+		String numConnectios ="Numero de connexiones";
 		
 		SortedSet<String> keys = new TreeSet<>(
 				s.getAgentsInformation().keySet());
